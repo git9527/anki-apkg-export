@@ -1,6 +1,6 @@
 export default function createTemplate({
-  questionFormat = '{{Front}}',
-  answerFormat = '{{FrontSide}}\n\n<hr id="answer">\n\n{{Back}}',
+  questionFormat = '请转换笔记模板后使用{{id}}',
+  answerFormat = '{{FrontSide}}\n\n<hr id="answer">\n\n{{question}}',
   css = '.card {\n font-family: arial;\n font-size: 20px;\n text-align: center;\n color: black;\nbackground-color: white;\n}\n'
 } = {}) {
   const conf = {
@@ -20,16 +20,16 @@ export default function createTemplate({
   };
 
   const models = {
-    1388596687391: {
+    1646389579085: {
       veArs: [],
-      name: 'Basic-f15d2',
+      name: '终极模板-作者微信:random9528',
       tags: ['Tag'],
       did: 1435588830424,
       usn: -1,
       req: [[0, 'all', [0]]],
       flds: [
         {
-          name: 'Front',
+          name: 'id',
           media: [],
           sticky: false,
           rtl: false,
@@ -38,11 +38,47 @@ export default function createTemplate({
           size: 20
         },
         {
-          name: 'Back',
+          name: 'question',
           media: [],
           sticky: false,
           rtl: false,
           ord: 1,
+          font: 'Arial',
+          size: 20
+        },
+        {
+          name: 'options',
+          media: [],
+          sticky: false,
+          rtl: false,
+          ord: 2,
+          font: 'Arial',
+          size: 20
+        },
+        {
+          name: 'answer',
+          media: [],
+          sticky: false,
+          rtl: false,
+          ord: 3,
+          font: 'Arial',
+          size: 20
+        },
+        {
+          name: 'notes',
+          media: [],
+          sticky: false,
+          rtl: false,
+          ord: 4,
+          font: 'Arial',
+          size: 20
+        },
+        {
+          name: 'audio',
+          media: [],
+          sticky: false,
+          rtl: false,
+          ord: 5,
           font: 'Arial',
           size: 20
         }
@@ -52,7 +88,7 @@ export default function createTemplate({
         '\\documentclass[12pt]{article}\n\\special{papersize=3in,5in}\n\\usepackage[utf8]{inputenc}\n\\usepackage{amssymb,amsmath}\n\\pagestyle{empty}\n\\setlength{\\parindent}{0in}\n\\begin{document}\n',
       tmpls: [
         {
-          name: 'Card 1',
+          name: '终极模板',
           qfmt: questionFormat,
           did: null,
           bafmt: '',

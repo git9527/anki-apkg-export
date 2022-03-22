@@ -2,7 +2,7 @@ import sha1 from 'sha1';
 import Zip from 'jszip';
 
 export default class {
-  constructor(deckName, { template, sql }) {
+  constructor(deckName, deckDesc, { template, sql }) {
     this.db = new sql.Database();
     this.db.run(template);
 
@@ -11,6 +11,7 @@ export default class {
     const topModelId = this._getId('notes', 'mid', now);
 
     this.deckName = deckName;
+    this.deckDesc = deckDesc;
     this.zip = new Zip();
     this.media = [];
     this.topDeckId = topDeckId;
@@ -21,12 +22,12 @@ export default class {
     const deck = getLastItem(decks);
     deck.name = this.deckName;
     deck.id = topDeckId;
+    deck.desc = this.deckDesc;
     decks[topDeckId + ''] = deck;
     this._update('update col set decks=:decks where id=1', { ':decks': JSON.stringify(decks) });
 
     const models = this._getInitialRowValue('col', 'models');
     const model = getLastItem(models);
-    model.name = this.deckName;
     model.did = this.topDeckId;
     model.id = topModelId;
     models[`${topModelId}`] = model;
@@ -67,10 +68,10 @@ export default class {
     this.media.push({ filename, data });
   }
 
-  addCard(front, back, { tags } = {}) {
+  addCard(fields, { tags } = {}) {
     const { topDeckId, topModelId, separator } = this;
     const now = Date.now();
-    const note_guid = this._getNoteGuid(topDeckId, front, back);
+    const note_guid = this._getNoteGuid(topDeckId, fields);
     const note_id = this._getNoteId(note_guid, now);
 
     let strTags = '';
@@ -80,6 +81,8 @@ export default class {
       strTags = this._tagsToStr(tags);
     }
 
+    const contents = fields.join(separator);
+
     this._update('insert or replace into notes values(:id,:guid,:mid,:mod,:usn,:tags,:flds,:sfld,:csum,:flags,:data)', {
       ':id': note_id, // integer primary key,
       ':guid': note_guid, // text not null,
@@ -87,9 +90,9 @@ export default class {
       ':mod': this._getId('notes', 'mod', now), // integer not null,
       ':usn': -1, // integer not null,
       ':tags': strTags, // text not null,
-      ':flds': front + separator + back, // text not null,
-      ':sfld': front, // integer not null,
-      ':csum': this._checksum(front + separator + back), //integer not null,
+      ':flds': contents, // text not null,
+      ':sfld': fields[0], // integer not null,
+      ':csum': this._checksum(contents), //integer not null,
       ':flags': 0, // integer not null,
       ':data': '' // text not null,
     });
@@ -154,8 +157,8 @@ export default class {
     return rowObj.id || this._getId('notes', 'id', ts);
   }
 
-  _getNoteGuid(topDeckId, front, back) {
-    return sha1(`${topDeckId}${front}${back}`);
+  _getNoteGuid(topDeckId, fields) {
+    return sha1(topDeckId + fields.join(''));
   }
 
   _getCardId(note_id, ts) {

@@ -1,5 +1,5 @@
 module.exports = {
-  hooks: {
-    'pre-commit': 'npm test'
-  }
+  // hooks: {
+  //   'pre-commit': 'npm test'
+  // }
 };
