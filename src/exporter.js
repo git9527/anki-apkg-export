@@ -8,7 +8,7 @@ export default class {
 
     const now = Date.now();
     const topDeckId = this._getId('cards', 'did', now);
-    const topModelId = this._getId('notes', 'mid', now);
+    const topModelId = 1646389579085;
 
     this.deckName = deckName;
     this.deckDesc = deckDesc;
