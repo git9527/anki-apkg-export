@@ -89,10 +89,10 @@ export default function createTemplate({
       tmpls: [
         {
           name: '终极模板',
-          qfmt: questionFormat,
+          qfmt: questionFormat.replace(/'/g, "''"),
           did: null,
           bafmt: '',
-          afmt: answerFormat,
+          afmt: answerFormat.replace(/'/g, "''"),
           ord: 0,
           bqfmt: ''
         }
