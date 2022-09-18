@@ -92,7 +92,7 @@ export default class {
       ':tags': strTags, // text not null,
       ':flds': contents, // text not null,
       ':sfld': fields[0], // integer not null,
-      ':csum': this._checksum(contents), //integer not null,
+      ':csum': this._checksum(fields[0]), //integer not null,
       ':flags': 0, // integer not null,
       ':data': '' // text not null,
     });

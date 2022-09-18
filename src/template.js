@@ -1,5 +1,5 @@
 export default function createTemplate({
-  questionFormat = '请先导入【示例牌组-商业版】{{id}}',
+  questionFormat = '请先导入【示例牌组-个人付费版】{{id}}',
   answerFormat = '{{FrontSide}}\n\n<hr id="answer">\n\n{{question}}',
   css = '.card {\n font-family: arial;\n font-size: 20px;\n text-align: center;\n color: black;\nbackground-color: white;\n}\n'
 } = {}) {
